@@ -2,9 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
-import csv
 import json
 
 driver = webdriver.Chrome()
@@ -27,7 +25,8 @@ for i in range(1, len(options)):
 
     table_body = soup.find(id='resultsSet')
 
-    attrs = ['crn', 'subject', 'section', 'title', 'credit', 'room', 'begin', 'end', 'days', 'max', 'count', 'instructor', 'fees']
+    attrs = ['crn', 'subject', 'section', 'title', 'credit', 'room', 'begin', 'end', 'days', 'max', 'count',
+             'instructor', 'fees']
 
     for row in table_body.find_all('tr'):
         course = {}
@@ -37,12 +36,12 @@ for i in range(1, len(options)):
             if 'Results' in data.text:
                 append = False
                 continue
-            
+
             item_string = ''
 
             for item in data.contents:
                 if str(item) != '<br/>' and 'span' not in str(item):
-                    item_string += str(item) + ' ' 
+                    item_string += str(item) + ' '
 
             course[attrs[i]] = item_string.rstrip()
             if course[attrs[i]] in crns:

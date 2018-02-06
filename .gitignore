@@ -1,1 +1,6 @@
 venv
+.env
+.idea
+.DS_STORE
+staticfiles
+*.pyc
