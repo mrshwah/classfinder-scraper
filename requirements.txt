@@ -10,6 +10,7 @@ graphql-relay==0.4.5
 gunicorn==19.7.1
 iso8601==0.1.12
 promise==2.1
+psycopg2==2.7.3.2
 pytz==2017.3
 Rx==1.6.0
 selenium==3.8.1
