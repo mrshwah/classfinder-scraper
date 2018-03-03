@@ -14,6 +14,7 @@ select_subject = driver.find_element_by_name('subject_code')
 options = [x for x in select_subject.find_elements_by_tag_name('option')]
 courses = []
 crns = []
+
 for i in range(1, len(options)):
     subject = options[i]
     subject.click()
@@ -46,14 +47,14 @@ for i in range(1, len(options)):
             course[attrs[i]] = item_string.rstrip()
             if course[attrs[i]] in crns:
                 append = False
-                continue
+                break
             if attrs[i] == 'crn':
                 crns.append(course[attrs[i]])
             i += 1
         if append:
             courses.append(course)
 
-writefile = 'spring18.json'
+writefile = 'fall18.json'
 
 data = {'courses': courses}
 

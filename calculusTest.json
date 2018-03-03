@@ -1,0 +1,34 @@
+{
+  "courses": [
+    {
+      "crn": "10032",
+      "subject": "MTH",
+      "section": "1110.02",
+      "title": "College Algebra Full Term",
+      "credit": "3.00",
+      "room": "MC314",
+      "begin": "1200 PM",
+      "end": "1250 PM",
+      "days": "MWF",
+      "max": "20",
+      "count": "0",
+      "instructor": "Daniel Biles",
+      "fees": ""
+    },
+    {
+      "crn": "10021",
+      "subject": "MTH",
+      "section": "1130.02",
+      "title": "Precalculus Mathematics Full Term",
+      "credit": "4.00",
+      "room": "JAAC2149 JAAC2149",
+      "begin": "0800 AM 0900 AM",
+      "end": "0915 AM 0950 AM",
+      "days": "TR M",
+      "max": "18",
+      "count": "0",
+      "instructor": "Sarah Fleming",
+      "fees": ""
+    }
+  ]
+}
