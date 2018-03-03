@@ -17,7 +17,7 @@ class RoomDayAndTimeType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     courses = graphene.List(CourseType, subject=graphene.String())
-    room_day_and_times = graphene.List(RoomDayAndTime)
+    room_day_and_times = graphene.List(RoomDayAndTimeType)
 
     def resolve_courses(self, info, subject=None, **kwargs):
         query = Course.objects.all()
