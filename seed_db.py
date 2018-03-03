@@ -89,8 +89,8 @@ for course in courses['courses']:
                            instructor=course['instructor'],
                            fees=fees)
 
+    course_to_add.save()
+
     for rdt in room_days_and_times:
         rdt.save()
         course_to_add.room_day_and_time.add(rdt)
-
-    course_to_add.save()

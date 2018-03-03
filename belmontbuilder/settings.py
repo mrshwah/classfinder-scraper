@@ -73,6 +73,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'belmontbuilder.wsgi.application'
 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8000',
+    '.herokuapp.com',
+    'localhost:3000'
+)
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
