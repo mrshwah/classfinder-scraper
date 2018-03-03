@@ -21,9 +21,9 @@ from courses.models import Course, RoomDayAndTime
 with open('fall18.json') as json_data:
     courses = json.load(json_data)
 
-room_days_and_times = []
-
 for course in courses['courses']:
+    room_days_and_times = []
+
     if '*' in course['crn']:
         continue
 
