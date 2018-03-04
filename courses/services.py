@@ -1,26 +1,8 @@
-'''
-from django.conf import settings
-import dj_database_url
-
-settings.configure(
-    DATABASES={
-        'default': dj_database_url.config(conn_max_age=600)
-    },
-    INSTALLED_APPS={
-        'courses'
-    }
-)
-
-import django
-django.setup()
-'''
-
-from courses.models import Course, RoomDayAndTime
+from courses.models import Course
 
 
 class RequestedCourse:
-    def __init__(self, rank, title):
-        self.rank = rank
+    def __init__(self, title):
         self.title = title
 
     def __str__(self):
@@ -29,14 +11,26 @@ class RequestedCourse:
 
 def create_schedule(requested_courses):
     possibilities = [list(Course.objects.filter(title=course.title)) for course in requested_courses]
-    return possibilities
+    course_schedule = []
 
+    for course in possibilities:  # Iterate through different courses
+        for section in course:  # Iterate through individual sections of each course
+            fits = True
+            for existing in course_schedule:  # Iterate through the current schedule, what we have so far
+                for time in existing.room_day_and_time.all():
+                    # check if course begins during existing course
+                    for section_time in section.room_day_and_time.all():
+                        if time.day != section_time.day:
+                            break
+                        if time.begin <= section_time.begin and time.end >= section_time.end:
+                            fits = False
+                            break
+                        if time.begin <= section_time.end and time.end >= section_time.end:
+                            fits = False
+                            break
 
-courses = [RequestedCourse(1, "Biochemistry I Full Term"),
-           RequestedCourse(2, "Circut Training Full Term"),
-           RequestedCourse(3, "Copyright Law Full Term")]
+            if fits:
+                course_schedule.append(section)  # if we make it through every course in our schedule
+                break  # with no conflicts, add it to schedule and move to next
 
-schedule = create_schedule(courses)
-for courses in schedule:
-    for course in courses:
-        print(course.title)
+    return course_schedule

@@ -15,12 +15,7 @@ class RoomDayAndTimeType(DjangoObjectType):
         model = RoomDayAndTime
 
 
-class ScheduleType:
-    courses = graphene.List(CourseType)
-
-
 class CourseInput(graphene.InputObjectType):
-    rank = graphene.Int()
     title = graphene.String()
 
 
@@ -44,8 +39,8 @@ class Query(graphene.ObjectType):
         return RoomDayAndTime.objects.all()
 
 
-class CreateSchedule(graphene.Mutation):
-    schedule = graphene.Field(ScheduleType)
+class MakeSchedule(graphene.Mutation):
+    schedule = graphene.List(CourseType)
 
     class Arguments:
         course_input = CourseListInput(required=True)
@@ -53,8 +48,10 @@ class CreateSchedule(graphene.Mutation):
     def mutate(self, info, course_input):
         requested_courses = []
         for course in course_input.courses:
-            requested_courses.append(RequestedCourse(course))
+            requested_courses.append(RequestedCourse(course.title))
         schedule = create_schedule(requested_courses)
+        return MakeSchedule(schedule=schedule)
 
-        print(schedule)
-        return 'You suck'
+
+class Mutation:
+    make_schedule = MakeSchedule.Field()
