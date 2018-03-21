@@ -9,10 +9,35 @@ class RequestedCourse:
         return 'Title = {}, Rank = {}'.format(self.title, self.rank)
 
 
-def create_schedule(requested_courses):
-    possibilities = [list(Course.objects.filter(title=course.title)) for course in requested_courses]
-    course_schedule = []
+class CourseTree:
+    def __init__(self, course):
+        self.course = course
+        self.children = []
 
+    def add(self, courses):
+        self.children.append(courses)
+
+
+def create_tree(tree, possible_courses):
+    if 0 == len(possible_courses):
+        return tree
+
+    for section in possible_courses[0]:
+        section_tree = CourseTree(section)
+        section_tree = create_tree(section_tree, possible_courses[1:])
+        tree.add(section_tree)
+    return tree
+
+
+def create_schedule(requested_courses):
+    possible_courses = [list(Course.objects.filter(title=course.title)) for course in requested_courses]
+
+    course_tree = CourseTree('Top')
+    course_tree = create_tree(course_tree, possible_courses)
+    course_schedule = possible_courses[0]
+
+    return course_schedule
+    '''
     for course in possibilities:  # Iterate through different courses
         for section in course:  # Iterate through individual sections of each course
             section_fits = True
@@ -34,3 +59,4 @@ def create_schedule(requested_courses):
                 break  # with no conflicts, add it to schedule and move to next
 
     return course_schedule
+    '''
