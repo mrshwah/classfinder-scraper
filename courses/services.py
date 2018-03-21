@@ -15,7 +15,7 @@ def create_schedule(requested_courses):
 
     for course in possibilities:  # Iterate through different courses
         for section in course:  # Iterate through individual sections of each course
-            fits = True
+            section_fits = True
             for existing in course_schedule:  # Iterate through the current schedule, what we have so far
                 for time in existing.room_day_and_time.all():
                     # check if course begins during existing course
@@ -23,13 +23,13 @@ def create_schedule(requested_courses):
                         if time.day != section_time.day:
                             break
                         if time.begin <= section_time.begin and time.end >= section_time.end:
-                            fits = False
+                            section_fits = False
                             break
                         if time.begin <= section_time.end and time.end >= section_time.end:
-                            fits = False
+                            section_fits = False
                             break
 
-            if fits:
+            if section_fits:
                 course_schedule.append(section)  # if we make it through every course in our schedule
                 break  # with no conflicts, add it to schedule and move to next
 
