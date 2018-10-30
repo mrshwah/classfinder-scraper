@@ -10,7 +10,12 @@ driver.get('http://classfinder.belmont.edu/')
 
 driver.implicitly_wait(5)
 
+term = driver.find_element_by_id('tc2')
+term.click()
+
 select_subject = driver.find_element_by_name('subject_code')
+WebDriverWait(driver, 10).until(
+        EC.staleness_of(select_subject.find_elements_by_tag_name('option')[0]))
 options = [x for x in select_subject.find_elements_by_tag_name('option')]
 courses = []
 crns = []
@@ -54,7 +59,7 @@ for i in range(1, len(options)):
         if append:
             courses.append(course)
 
-writefile = 'fall18.json'
+writefile = 'spring19.json'
 
 data = {'courses': courses}
 

@@ -18,7 +18,7 @@ django.setup()
 
 from courses.models import Course, RoomDayAndTime
 
-with open('fall18.json') as json_data:
+with open('spring19.json') as json_data:
     courses = json.load(json_data)
 
 for course in courses['courses']:
