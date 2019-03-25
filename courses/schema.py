@@ -11,7 +11,7 @@ class CourseType(DjangoObjectType):
 
 
 class ScheduleType(graphene.ObjectType):
-    schedule = graphene.List(CourseType)
+    courses = graphene.List(CourseType)
 
 
 class RoomDayAndTimeType(DjangoObjectType):
@@ -49,7 +49,7 @@ class MakeSchedule(graphene.Mutation):
         requested_courses = []
         for title in course_input.course_titles:
             requested_courses.append(RequestedCourse(title))
-        schedules = create_schedules(requested_courses)
+        schedules = [ScheduleType(courses=courses) for courses in create_schedules(requested_courses)]
         return MakeSchedule(schedules=schedules)
 
 
