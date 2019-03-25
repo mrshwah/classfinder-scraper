@@ -1,4 +1,4 @@
-bbvenv
+venv/
 .env
 .idea
 .DS_STORE
