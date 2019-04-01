@@ -2,12 +2,16 @@ import graphene
 from graphene_django import DjangoObjectType
 
 from courses.models import Course, RoomDayAndTime
-from courses.services import RequestedCourse, create_schedule
+from courses.services import RequestedCourse, create_schedules
 
 
 class CourseType(DjangoObjectType):
     class Meta:
         model = Course
+
+
+class ScheduleType(graphene.ObjectType):
+    courses = graphene.List(CourseType)
 
 
 class RoomDayAndTimeType(DjangoObjectType):
@@ -36,7 +40,7 @@ class Query(graphene.ObjectType):
 
 
 class MakeSchedule(graphene.Mutation):
-    schedule = graphene.List(CourseType)
+    schedules = graphene.List(ScheduleType)
 
     class Arguments:
         course_input = CourseListInput(required=True)
@@ -45,8 +49,8 @@ class MakeSchedule(graphene.Mutation):
         requested_courses = []
         for title in course_input.course_titles:
             requested_courses.append(RequestedCourse(title))
-        schedule = create_schedule(requested_courses)
-        return MakeSchedule(schedule=schedule)
+        schedules = [ScheduleType(courses=courses) for courses in create_schedules(requested_courses)]
+        return MakeSchedule(schedules=schedules)
 
 
 class Mutation:

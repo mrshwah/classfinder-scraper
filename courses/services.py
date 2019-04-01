@@ -82,7 +82,7 @@ def check_conflicts(course_1, course_2):
     return section_fits
 
 
-def create_schedule(requested_courses):
+def create_schedules(requested_courses):
     for course in requested_courses:
         print(course.title)
         print(len(Course.objects.filter(title=course.title)))
@@ -93,4 +93,4 @@ def create_schedule(requested_courses):
 
     schedules = build_schedules(course_tree)
     schedules = list(filter(lambda x: len(x) == len(requested_courses), schedules))
-    return schedules[0]
+    return schedules
