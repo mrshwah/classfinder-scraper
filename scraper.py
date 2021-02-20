@@ -58,7 +58,7 @@ for i in range(1, len(options)):
         if append:
             courses.append(course)
 
-writefile = 'fall19.json'
+writefile = 'fall21.json'
 
 data = {'courses': courses}
 

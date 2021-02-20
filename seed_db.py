@@ -6,7 +6,7 @@ import dj_database_url
 
 settings.configure(
     DATABASES={
-        'default': dj_database_url.config(conn_max_age=600)
+        'default': dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)
     },
     INSTALLED_APPS={
         'courses'
@@ -18,7 +18,7 @@ django.setup()
 
 from courses.models import Course, RoomDayAndTime
 
-with open('fall19.json') as json_data:
+with open('fall21.json') as json_data:
     courses = json.load(json_data)
 
 for course in courses['courses']:
